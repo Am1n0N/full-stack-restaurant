@@ -52,7 +52,7 @@ const AddRestaurantPage = () => {
   });
 
 
-  const handleCoordinateSelection = (coords) => {
+  const handleCoordinateSelection = (coords:any) => {
     setSelectedCoordinates([coords.latLng.lat(), coords.latLng.lng()]);
   };
   useEffect(() => {
@@ -218,7 +218,7 @@ const AddRestaurantPage = () => {
             <option value="none">
               --Select Owner--
             </option>
-            {users.map((user) => (
+            {users.map((user:any) => (
               <option className="" key={user.id} value={user.id}>
                 <text>{user.name}</text>
               </option>

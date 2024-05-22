@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 
 const Price = ({ product }: { product: ProductType }) => {
   const [total, setTotal] = useState(product.price);
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState<Number>(1);
   const [selected, setSelected] = useState(0);
 
   const { addToCart } = useCartStore();
@@ -19,7 +19,7 @@ const Price = ({ product }: { product: ProductType }) => {
   useEffect(() => {
     if (product.options?.length) {
       setTotal(
-        parseInt(quantity) * parseInt(product.price) + parseInt(product.options[selected].additionalPrice)
+        Number(quantity) * Number(product.price) + Number(product.options[selected].additionalPrice)
       );
     }
   }, [quantity, selected, product]);
@@ -33,7 +33,7 @@ const Price = ({ product }: { product: ProductType }) => {
       ...(product.options?.length && {
         optionTitle: product.options[selected].title,
       }),
-      quantity: quantity,
+      quantity: quantity as number, // Change the type of quantity to 'number'
     })
     toast.success("The product added to the cart!")
   }
@@ -65,13 +65,13 @@ const Price = ({ product }: { product: ProductType }) => {
           <span>Quantity</span>
           <div className="flex gap-4 items-center">
             <button
-              onClick={() => setQuantity((prev) => (prev > 1 ? prev - 1 : 1))}
+              onClick={() => setQuantity((prev) => (Number(prev) > 1 ? Number(prev) - 1 : 1))}
             >
               {"<"}
             </button>
-            <span>{quantity}</span>
+            <span>{String(quantity)}</span> 
             <button
-              onClick={() => setQuantity((prev) => (prev < 9 ? prev + 1 : 9))}
+              onClick={() => setQuantity((prev) => (Number(prev) < 9 ? Number(prev) + 1 : 9))}
             >
               {">"}
             </button>

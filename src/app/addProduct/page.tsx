@@ -49,8 +49,8 @@ const getCategories = async (restaurant: string) => {
 const AddPage = () => {
   const { data: session, status } = useSession();
   const [restaurants, setRestaurants] = useState<RestaurantType[]>([]);
-  const [restaurant, setRestaurant] = useState<RestaurantType[]>([]);
-  const [categories, setCategories] = useState<MenuType[]>([]);
+  const [restaurant, setRestaurant] = useState<any>([]);
+  const [categories, setCategories] = useState<any>([]);
   const [inputs, setInputs] = useState<Inputs>({
     title: "",
     desc: "",
@@ -61,7 +61,7 @@ const AddPage = () => {
 
   //get restaurants
   useEffect(() => {
-    getRestaurants(session?.user.id).then((data) => {
+    getRestaurants(session?.user.id ?? "").then((data) => {
       setRestaurants(data)
     });
   }, [session]);
@@ -188,13 +188,13 @@ const AddPage = () => {
           <select
             className="ring-1 ring-red-200 p-4 rounded-sm placeholder:text-red-200 outline-none"
             onChange={(e) => {
-              setRestaurant(restaurants.find((rest) => rest["slug"] == e.target.value)!);
+              setRestaurant(restaurants.find((rest:any) => rest["slug"] == e.target.value)!);
             }}
           >
             <option value="none">
               --Select Restaurant--
             </option>
-            {restaurants.map((restaurant) => (
+            {restaurants.map((restaurant:any) => (
               <option key={restaurant["slug"]} value={restaurant["slug"]}>
                 {restaurant["title"]}
               </option>
@@ -212,7 +212,7 @@ const AddPage = () => {
             <option value="none">
               --Select Category--
             </option>
-            {categories.map((category) => (
+            {categories.map((category:any) => (
               <option key={category["slug"]} value={category["slug"]}>
                 {category["title"]}
               </option>

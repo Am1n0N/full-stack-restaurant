@@ -51,7 +51,7 @@ const UpdateRestaurantPage = ({ params }: Props) => {
 
   const { data: session, status } = useSession();
   const [users, setUsers] = useState<UserType[]>([]);
-  const [restaurant, setRestaurant] = useState<RestaurantType[]>([]);
+  const [restaurant, setRestaurant] = useState<any>([]);
   const [selectedCoordinates, setSelectedCoordinates] = useState(null);
   const [inputs, setInputs] = useState<Inputs>({
     title: "",
@@ -92,7 +92,7 @@ const UpdateRestaurantPage = ({ params }: Props) => {
 
   const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setInputs((prev) => {
-      return { ...prev, [e.target.name]: e.target.defaultVa };
+      return { ...prev, [e.target.name]: e.target.value };
     });
   }
 
@@ -100,7 +100,7 @@ const UpdateRestaurantPage = ({ params }: Props) => {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     setInputs((prev) => {
-      return { ...prev, [e.target.name]: e.target.defaultVa };
+      return { ...prev, [e.target.name]: e.target.value };
     });
   };
 
@@ -108,10 +108,7 @@ const UpdateRestaurantPage = ({ params }: Props) => {
   const handleImageChange = (newImageUrl: string) => {
     setImageUrl(newImageUrl);
   };
-  const handleCoordinateSelection = (coords) => {
-    setSelectedCoordinates([coords.latLng.lat(), coords.latLng.lng()]);
-  };
-
+ 
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -128,7 +125,7 @@ const UpdateRestaurantPage = ({ params }: Props) => {
           lng: selectedCoordinates ? selectedCoordinates[1] : "",
         }),
       });
-      
+
       const data = await res.json();
 
       router.push(`/admin`);
@@ -143,7 +140,7 @@ const UpdateRestaurantPage = ({ params }: Props) => {
         <h1 className="text-4xl mb-2 text-gray-300 font-bold">
           Add New Product
         </h1>
-        <ImageUpload defaultVal={imageUrl} onChange={handleImageChange} />
+        <ImageUpload value={imageUrl} onChange={handleImageChange} />
 
         <div className="w-full flex flex-col gap-2 ">
           <label className="text-sm">Title</label>
@@ -235,7 +232,11 @@ const UpdateRestaurantPage = ({ params }: Props) => {
             onChange={handleChange}
           />
         </div>
-        <CoordinatesSelector onCoordinatesSelect={handleCoordinateSelection} />
+        <CoordinatesSelector onCoordinatesSelect={
+          (e: any) => {
+            setSelectedCoordinates(e);
+          }
+        } />
         <div className="w-full flex flex-col gap-2 ">
           <label className="text-sm">Owner</label>
           <select
@@ -247,9 +248,9 @@ const UpdateRestaurantPage = ({ params }: Props) => {
             <option defaultValue="none">
               --Select Owner--
             </option>
-            {users.map((user) => (
+            {users.map((user: any) => (
               <option className="" key={user.id} defaultValue
-={user.id}>
+                ={user.id}>
                 <text>{user.name}</text>
               </option>
             ))}

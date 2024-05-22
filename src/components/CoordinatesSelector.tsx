@@ -7,10 +7,10 @@ const center = {
     lng: 10.20669137562596,
 }
 
-const CoordinatesSelector = ({ onCoordinatesSelect }) => {
-  const [selectedCoords, setSelectedCoords] = useState(null);
+const CoordinatesSelector = ({ onCoordinatesSelect }: { onCoordinatesSelect: (e: any) => void }) => {
+  const [selectedCoords, setSelectedCoords] = useState<[number, number]>([0, 0]);
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY || ""
   });
 
   if (loadError) return "Error loading Maps";
@@ -22,8 +22,10 @@ const CoordinatesSelector = ({ onCoordinatesSelect }) => {
       zoom={8}
       center={center}
       onClick={(e) => {
-        setSelectedCoords([e.latLng.lat(), e.latLng.lng()]);
-        onCoordinatesSelect(e);
+        if (e.latLng) {
+          setSelectedCoords([e.latLng.lat(), e.latLng.lng()]);
+          onCoordinatesSelect(e);
+        }
       }}
     >
       {selectedCoords && (

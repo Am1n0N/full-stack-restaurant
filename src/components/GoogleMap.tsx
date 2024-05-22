@@ -28,7 +28,7 @@ const getData = async () => {
 
 export default function GoogleMaps() {
     const [restaurants, setRestaurants] = useState<RestaurantType[]>([])
-    const [selected, setSelected] = useState<RestaurantType | null>(null)
+    const [selected, setSelected] = useState<any>(null)
     const { isLoaded, loadError } = useLoadScript({
         googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY || ""
     });
@@ -45,7 +45,7 @@ export default function GoogleMaps() {
             zoom={13}
             center={center}
         >
-            {restaurants.map((restaurant) => (
+            {restaurants.map((restaurant:any) => (
                 <MarkerF
                     key={restaurant.id}
                     position={{ lat: restaurant.lat, lng: restaurant.lng }}

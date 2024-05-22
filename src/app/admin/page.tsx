@@ -29,13 +29,13 @@ const AdminPage = () => {
     const router = useRouter();
     const { data: session, status } = useSession();
     const [restaurants, setRestaurants] = useState<RestaurantType[]>([]);
-    const [users, setUsers] = useState<UserType[]>([]);
+    const [users, setUsers] = useState<any>([]);
 
     const handleDeleteUser = (id: string) => {
         fetch(`http://localhost:3000/api/users/${id}`, {
             method: "DELETE",
         }).then(() => {
-            setUsers((prevUsers) => prevUsers.filter((user) => user.id !== id));
+            setUsers((prevUsers:any) => prevUsers.filter((user:any) => user.id !== id));
         });
 
     }
@@ -44,7 +44,7 @@ const AdminPage = () => {
         fetch(`http://localhost:3000/api/restaurants/${id}`, {
             method: "DELETE",
         }).then(() => {
-            setRestaurants((prevRestaurants) => prevRestaurants.filter((restaurant) => restaurant.id !== id));
+            setRestaurants((prevRestaurants:any) => prevRestaurants.filter((restaurant:any) => restaurant.id !== id));
         });
 
     }
@@ -68,7 +68,7 @@ const AdminPage = () => {
                 <div >
                     <h1 className="font-bold text-2xl text-center"> Users </h1>
                     <ul role="list" className="divide-y divide-gray-100 overflow-y-scroll scroll-smooth h-[600px] p-2">
-                        {users.map((user) => (
+                        {users.map((user:any) => (
                             <li key={user.id} className="flex justify-between gap-x-6 py-5">
                                 <div className="flex min-w-0 gap-x-4">
                                     <img className="h-12 w-12 flex-none rounded-full bg-gray-50" src={user.image} alt="user image" />
@@ -93,7 +93,7 @@ const AdminPage = () => {
                     <h1 className="font-bold text-2xl text-center"> Restaurants </h1>
                     <ul role="list" className="divide-y divide-gray-100 overflow-y-scroll h-[600px] p-2">
 
-                        {restaurants.map((restaurant) => (
+                        {restaurants.map((restaurant:any) => (
                             <li key={restaurant.id} className="flex justify-between gap-x-6 py-5">
                                 <div className="flex min-w-0 gap-x-4">
                                     <img className="h-12 w-12 flex-none rounded-full bg-gray-50" src={restaurant.img} alt="restaurant image" />

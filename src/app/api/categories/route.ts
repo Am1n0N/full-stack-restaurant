@@ -7,12 +7,11 @@ import { NextResponse, NextRequest } from "next/server";
 export const GET = async (req: NextRequest) => {
   const { searchParams } = new URL(req.url);
   const cat = searchParams.get("cat");
-  console.log(cat);
-  try {
 
+  try {
     const categories = await prisma.category.findMany({
       where: {
-        restSlug: cat
+        restSlug: cat || "", // Provide a default value or filter out null
       },
     });
     return new NextResponse(JSON.stringify(categories), { status: 200 });

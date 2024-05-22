@@ -66,7 +66,7 @@ export const DELETE = async (
     // Delete the user's orders
     await prisma.order.deleteMany({
       where: {
-        userEmail: (await prisma.user.findUnique({ where: { id } }))?.email,
+        userEmail: (await prisma.user.findUnique({ where: { id } }))?.email || "",
       },
     });
 

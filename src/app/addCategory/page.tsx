@@ -48,7 +48,7 @@ const AddCategoryPage = () => {
 
   //get restaurants
   useEffect(() => {
-    getRestaurants(session?.user.id).then((data) => setRestaurants(data));
+    getRestaurants(session?.user.id ?? "").then((data) => setRestaurants(data));
   }, [session]);
 
 
@@ -58,9 +58,9 @@ const AddCategoryPage = () => {
 
   if (status === "loading") {
     return <p>Loading...</p>;
-  }
+  } 
 
-  if (status === "unauthenticated" || !session?.user.type === "owner") {
+  if (status === "unauthenticated" || session?.user.type !== "owner") {
     router.push("/");
   }
 
@@ -169,9 +169,9 @@ const AddCategoryPage = () => {
             <option value="none">
               --Select Restaurant--
             </option>
-            {restaurants.map((restaurant) => (
-              <option key={restaurant["slug"]} value={restaurant["slug"]}>
-                {restaurant["title"]}
+            {restaurants.map((restaurant:any) => (
+              <option key={restaurant} value={restaurant.slug}>
+                {restaurant.title}
               </option>
             ))}
           </select>

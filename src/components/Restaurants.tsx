@@ -22,7 +22,7 @@ const Restaurants = async () => {
   return (
     <div>
       <div className="grid grid-cols-2 p-8 gap-2 items-baseline">
-        {restaurants.map((restaurant) => (
+        {restaurants.map((restaurant:any) => (
           <Link
             href={`/restaurants/${restaurant.slug}/menu`}
             key={restaurant.id}
