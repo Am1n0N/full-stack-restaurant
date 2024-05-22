@@ -10,7 +10,7 @@ const center = {
 const CoordinatesSelector = ({ onCoordinatesSelect }) => {
   const [selectedCoords, setSelectedCoords] = useState(null);
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: "AIzaSyAsB4Rldm6luC9i1McHiHlX7ymOKmPnAHw"
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY
   });
 
   if (loadError) return "Error loading Maps";
